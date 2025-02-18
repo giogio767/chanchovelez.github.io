@@ -1,12 +1,17 @@
 body {
     font-family: 'DM Sans', sans-serif;
+    cursor: url("u.png"), auto;
 }
 
-h1,h2,h3,h4,h5,h6{
+a {
+    cursor: url("u.png"), auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Bree Serif', serif;
     box-align: center;
     text-align: center;
-    color:black;
+    color: black;
 }
 
 p{
@@ -17,7 +22,7 @@ p{
 .cover {
     height: 400px;
     color: white;
-    background-image: url('./images/portada.jpg');
+    background-image: url('./images/11.jpg');
     background-size: cover;
     background-position:center;
     background-color: rgba(0,0,0, 0.60);
@@ -26,7 +31,7 @@ p{
 
 
 .cover-small {
-    height: 200px;
+    height: 300px;
     background-blend-mode: normal;
 }
 

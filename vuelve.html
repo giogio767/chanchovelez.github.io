@@ -42,31 +42,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imágenes que Rebotan al Hacer Clic</title>
+    <title>Imágenes que Rebotan con Contador Retro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             height: 100vh;
             overflow: hidden;
-            background-color: #f0f0f0;
+            background-color: #000; /* Fondo negro para vibe retro */
             cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
         }
         .bounce-image {
             position: absolute;
-            width: 50px; /* Tamaño de la imagen */
+            width: 50px;
             height: 50px;
-            pointer-events: none; /* Para no interferir con clics */
-            border-radius: 50%; /* Opcional: hace las imágenes circulares */
+            pointer-events: none;
+            border-radius: 50%;
+        }
+        #countdown {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #00FFFF, #FF00FF); /* Gradiente neón */
+            color: #FFFF00; /* Texto amarillo neón */
+            padding: 15px 25px;
+            border: 4px solid #00FF00; /* Borde verde neón */
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 0 15px #00FFFF, 0 0 30px #FF00FF; /* Sombra brillante */
+            text-shadow: 2px 2px 4px #000; /* Sombra de texto */
+            animation: blink 1.5s infinite; /* Efecto de parpadeo */
+            line-height: 1.5;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <div id="countdown">El prime volvera exactamente en: 0 días, 0 horas, 0 minutos, 0 segundos</div>
     <script>
-        // Array de URLs de imágenes (puedes agregar más o usar locales)
+        // Array de URLs de imágenes
         const images = [
-            'https://via.placeholder.com/50/FF0000', // Roja
-            'https://via.placeholder.com/50/00FF00', // Verde
-            'https://via.placeholder.com/50/0000FF'  // Azul
+            'https://via.placeholder.com/50/FF0000',
+            'https://via.placeholder.com/50/00FF00',
+            'https://via.placeholder.com/50/0000FF'
         ];
 
         // Array para almacenar imágenes y sus velocidades
@@ -79,8 +105,8 @@
 
         // Función para obtener una posición aleatoria
         function getRandomPosition() {
-            const maxX = window.innerWidth - 50; // Ajusta según el ancho de la imagen
-            const maxY = window.innerHeight - 50; // Ajusta según el alto de la imagen
+            const maxX = window.innerWidth - 50;
+            const maxY = window.innerHeight - 50;
             const x = Math.random() * maxX;
             const y = Math.random() * maxY;
             return { x, y };
@@ -88,7 +114,7 @@
 
         // Función para obtener una velocidad aleatoria
         function getRandomVelocity() {
-            const speed = 5; // Velocidad base (ajusta si quieres más rápido/lento)
+            const speed = 5;
             const angle = Math.random() * 2 * Math.PI;
             return {
                 vx: Math.cos(angle) * speed,
@@ -106,7 +132,6 @@
             img.style.top = `${pos.y}px`;
             document.body.appendChild(img);
 
-            // Agregar la imagen y su velocidad al array
             bouncingImages.push({
                 element: img,
                 x: pos.x,
@@ -119,31 +144,51 @@
         // Función para actualizar las posiciones y manejar rebotes
         function update() {
             bouncingImages.forEach((imgObj) => {
-                // Actualizar posición
                 imgObj.x += imgObj.vx;
                 imgObj.y += imgObj.vy;
 
-                // Detectar colisiones con los bordes
                 if (imgObj.x <= 0 || imgObj.x >= window.innerWidth - 50) {
-                    imgObj.vx = -imgObj.vx; // Invertir dirección horizontal
-                    imgObj.x = Math.max(0, Math.min(imgObj.x, window.innerWidth - 50)); // Evitar que se salga
+                    imgObj.vx = -imgObj.vx;
+                    imgObj.x = Math.max(0, Math.min(imgObj.x, window.innerWidth - 50));
                 }
                 if (imgObj.y <= 0 || imgObj.y >= window.innerHeight - 50) {
-                    imgObj.vy = -imgObj.vy; // Invertir dirección vertical
-                    imgObj.y = Math.max(0, Math.min(imgObj.y, window.innerHeight - 50)); // Evitar que se salga
+                    imgObj.vy = -imgObj.vy;
+                    imgObj.y = Math.max(0, Math.min(imgObj.y, window.innerHeight - 50));
                 }
 
-                // Aplicar la nueva posición al elemento
                 imgObj.element.style.left = `${imgObj.x}px`;
                 imgObj.element.style.top = `${imgObj.y}px`;
             });
 
-            // Continuar la animación
             requestAnimationFrame(update);
         }
 
         // Iniciar la animación
         requestAnimationFrame(update);
+
+        // Contador para el 6 de enero de 2026
+        function updateCountdown() {
+            const targetDate = new Date('January 6, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft <= 0) {
+                document.getElementById('countdown').textContent = '¡Llegó el 6 de enero!';
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').textContent = 
+                `Faltan para el 6 de enero: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Actualizar el contador cada segundo
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Llamada inicial
     </script>
 </body>
 </html>

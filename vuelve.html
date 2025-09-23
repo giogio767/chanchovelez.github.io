@@ -91,8 +91,9 @@
         // Array de URLs de imágenes
         const images = [
             'https://imgur.com/z6dLLSG',
-            'https://via.placeholder.com/50/00FF00',
-            'https://via.placeholder.com/50/0000FF'
+            'https://imgur.com/z6dLLSG',
+            'https://imgur.com/z6dLLSG',
+            'https://imgur.com/z6dLLSG'
         ];
 
         // Array para almacenar imágenes y sus velocidades
@@ -183,7 +184,7 @@
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
             document.getElementById('countdown').textContent = 
-                `Faltan para el 6 de enero: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                `El prime volvera exactamente en: ${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
         // Actualizar el contador cada segundo
